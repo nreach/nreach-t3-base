@@ -20,7 +20,9 @@
         "typo3/cms": "^8.7",
         "nreach/base": "~1.0"
     },
-    "branch-alias": {
-        "dev-master": "1.x-dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
     }
 }
