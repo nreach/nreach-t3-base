@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use Helhum\Typo3Console\Mvc\Cli\CommandDispatcher;
 
 use Nreach\T3Base\Configuration;
-use \Nreach\Base\Service;
+use Nreach\Base\Service;
 
 /**
  * Remote Controller of the Nreach extension

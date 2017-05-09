@@ -1,5 +1,6 @@
 <?php
 namespace Nreach\T3Base;
+
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 

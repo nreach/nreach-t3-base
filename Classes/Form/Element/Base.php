@@ -1,5 +1,6 @@
 <?php
 namespace Nreach\T3Base\Form\Element;
+
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
