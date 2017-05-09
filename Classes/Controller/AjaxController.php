@@ -21,6 +21,22 @@ use Nreach\Base\Service;
  */
 class AjaxController extends ActionController
 {
+    private $configuration = null;
+    private $dataSource = null;
+    private $service = null;
+
+   public function __construct()
+    {
+        $this->configuration = GeneralUtility::makeInstance(Configuration::class);
+        $this->dataSource = GeneralUtility::makeInstance(DataSourceDelegate::class);
+        $this->service = GeneralUtility::makeInstance(
+            Service::class,
+            $this->configuration->getHost(),
+            $this->configuration->getKeys(),
+            $this->dataSource
+        );
+    }
+
     public function nreachAjax(ServerRequestInterface $request, ResponseInterface $response)
     {
         $params = $request->getParsedBody();
@@ -30,11 +46,8 @@ class AjaxController extends ActionController
            return $this->chatCommand($params, $response);
         }
 
-        $args = $params['args'];
+        $args = $params['args'] ?: [];
         $body = NULL;
-
-        $configuration = GeneralUtility::makeInstance(Configuration::class);
-        $service = GeneralUtility::makeInstance(Service::class, $configuration->getHost(), $configuration->getKeys());
 
         if (isset($args['fileuid'])) {
             $body = base64_encode($this->getFileObjectByUid($args['fileuid'])->getContents());
@@ -44,7 +57,7 @@ class AjaxController extends ActionController
         }
         unset($args['body']);
 
-        $result = $service->call($action, $args, $body);
+        $result = $this->service->call($action, $args, $body);
         $response->getBody()->write($result);
         return $response;
     }
@@ -59,8 +72,8 @@ class AjaxController extends ActionController
 	}
 
     protected function chatCommand($arguments, $response) {
-        $dispatcher = CommandDispatcher::create('/var/www/vagrant/bin/typo3cms');
-        $output = $dispatcher->executeCommand('cache:flush');
+        // $dispatcher = CommandDispatcher::create('/var/www/vagrant/bin/typo3cms');
+        // $output = $dispatcher->executeCommand('cache:flush');
         $response->getBody()->write(\json_encode(["result" => $output]));
         return $response;
     }
