@@ -33,7 +33,7 @@ class Base extends AbstractFormElement
         return [
             'iconIdentifier' => 'actions-edit-undo',
             'title' => 'nreach',
-            'requireJsModules' => ['TYPO3/CMS/T3Base/Nreacht', ''],
+            'requireJsModules' => ['TYPO3/CMS/NreachT3Base/Nreach', ''],
             'linkAttributes' => $linkAttributes
         ];
     }
