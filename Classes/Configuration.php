@@ -20,7 +20,7 @@ class Configuration implements \TYPO3\CMS\Core\SingletonInterface {
 
     function __construct()
     {
-        $this->settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['nreacht3']);
+        $this->settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['nreach_t3_base']);
     }
 
     /**
