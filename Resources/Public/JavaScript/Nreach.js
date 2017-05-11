@@ -3,7 +3,7 @@ requirejs.config({
         NreachUI: [
             'http://localhost:3001/webpack/NreachUI',
             //If the dev version fails, load local
-            '../typo3conf/ext/nreacht3/Resources/Public/JavaScript/lib/NreachUI'
+            '../typo3conf/ext/nreach_t3_base/Resources/Public/JavaScript/lib/NreachUI'
         ]
     }
 });
@@ -43,6 +43,12 @@ define([
             selector: function(element) {
                 return $(element.parentElement.parentElement).siblings('.form-wizards-element')[0].children[0];
             }
+        },
+        'nreacht3-magicrelation': {
+            widget: 'MagicMedia',
+            selector: function(element) {
+                return null;
+            }
         }
     };
 
@@ -54,4 +60,6 @@ define([
             new NreachUI.default([config.widget], element, data, Remote);
         }
     });
+
+    return NreachUI;
 });
