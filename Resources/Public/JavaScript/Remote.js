@@ -23,7 +23,7 @@ define([
                 cb(null, data);
             }).
             fail(function(jqXHR, textStatus, errorThrown) {
-                cb(null, jqXHR.responseText);
+                cb(jqXHR.responseText,  null);
             });
     }
 
