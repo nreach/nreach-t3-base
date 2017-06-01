@@ -37,7 +37,8 @@ class Configuration implements \TYPO3\CMS\Core\SingletonInterface {
     public function getKeys() {
         return [
             'imageanalyzer' => $this->settings['nreachImageAnalyzerKey'],
-            'bot' => $this->settings['nreachImageAnalyzerKey'],
+            'bot' => $this->settings['nreachBotKey'],
+            'linker' => $this->settings['nreachLinkerKey'],
             'textanalyzer' => $this->settings['nreachTextAnalyzerKey']
         ];
     }
