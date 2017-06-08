@@ -43,7 +43,7 @@ class AjaxController extends ActionController
         $action = $params['action'];
 
         if ($action === 'botAction') {
-           return $this->chatCommand($params, $response);
+            return $this->chatCommand($params, $response);
         }
 
         $args = $params['args'] ?: [];

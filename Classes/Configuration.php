@@ -39,7 +39,8 @@ class Configuration implements \TYPO3\CMS\Core\SingletonInterface {
             'imageanalyzer' => $this->settings['nreachImageAnalyzerKey'],
             'bot' => $this->settings['nreachBotKey'],
             'linker' => $this->settings['nreachLinkerKey'],
-            'textanalyzer' => $this->settings['nreachTextAnalyzerKey']
+            'textanalyzer' => $this->settings['nreachTextAnalyzerKey'],
+            'translator' => $this->settings['nreachTextAnalyzerKey']
         ];
     }
 }
