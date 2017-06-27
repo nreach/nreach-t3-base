@@ -42,20 +42,15 @@ class AjaxController extends ActionController
         $params = $request->getParsedBody();
         $action = $params['action'];
 
-        if ($action === 'botAction') {
-            return $this->chatCommand($params, $response);
-        }
+        // if ($action === 'botAction') {
+        //     return $this->chatCommand($params, $response);
+        // }
 
         $args = $params['args'] ?: [];
-        $body = NULL;
+        $body = $params['body'] ?: [];
 
-        if (isset($args['fileuid'])) {
-            $body = base64_encode($this->getFileObjectByUid($args['fileuid'])->getContents());
-            unset($args['fileuid']);
-        } else if (!empty($args['body'])) {
-            $body = $args['body'];
-        }
-        unset($args['body']);
+        if (isset($body['fileuid']))
+            $body = base64_encode($this->getFileObjectByUid($body['fileuid'])->getContents());
 
         $result = $this->service->call($action, $args, $body);
         $response->getBody()->write($result);
@@ -71,10 +66,10 @@ class AjaxController extends ActionController
 		return ResourceFactory::getInstance()->getFileObject((integer) $uid);
 	}
 
-    protected function chatCommand($arguments, $response) {
-        // $dispatcher = CommandDispatcher::create('/var/www/vagrant/bin/typo3cms');
-        // $output = $dispatcher->executeCommand('cache:flush');
-        $response->getBody()->write(\json_encode(["result" => $output]));
-        return $response;
-    }
+    // protected function chatCommand($arguments, $response) {
+    //     // $dispatcher = CommandDispatcher::create('/var/www/vagrant/bin/typo3cms');
+    //     // $output = $dispatcher->executeCommand('cache:flush');
+    //     $response->getBody()->write(\json_encode(["result" => $output]));
+    //     return $response;
+    // }
 }

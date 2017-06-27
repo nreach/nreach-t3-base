@@ -13,18 +13,18 @@ define([
             return '';
     }
 
-    function remote(action, args, cb)
+    function remote(action, body, args, cb)
     {
         if (action === 'pagecontent')
-            pagecontent(args, cb);
-        else
-            $.post(route('nreacht3_nreacht3'), {action: action,  args: args})
-            .done(function(data) {
-                cb(null, data);
-            }).
-            fail(function(jqXHR, textStatus, errorThrown) {
-                cb(jqXHR.responseText,  null);
-            });
+            return pagecontent(args, cb);
+
+		$.post(route('nreacht3_nreacht3'), {action: action,  args: args, body: body})
+         .done(function(data) {
+             cb(null, data);
+         }).
+          fail(function(jqXHR, textStatus, errorThrown) {
+              cb(jqXHR.responseText,  null);
+          });
     }
 
     function pagecontent(args, cb) {
