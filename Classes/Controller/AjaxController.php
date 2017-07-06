@@ -11,6 +11,8 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use Helhum\Typo3Console\Mvc\Cli\CommandDispatcher;
 
 use Nreach\T3Base\Configuration;
+use Nreach\T3Base\Remote;
+use Nreach\T3Base\Utility;
 use Nreach\Base\Service;
 
 /**
@@ -21,20 +23,11 @@ use Nreach\Base\Service;
  */
 class AjaxController extends ActionController
 {
-    private $configuration = null;
-    private $dataSource = null;
-    private $service = null;
+    private $remote = null;
 
-   public function __construct()
+    public function __construct()
     {
-        $this->configuration = GeneralUtility::makeInstance(Configuration::class);
-        $this->dataSource = GeneralUtility::makeInstance(DataSourceDelegate::class);
-        $this->service = GeneralUtility::makeInstance(
-            Service::class,
-            $this->configuration->getHost(),
-            $this->configuration->getKeys(),
-            $this->dataSource
-        );
+        $this->remote = GeneralUtility::makeInstance(Remote::class);
     }
 
     public function nreachAjax(ServerRequestInterface $request, ResponseInterface $response)
@@ -50,9 +43,9 @@ class AjaxController extends ActionController
         $body = $params['body'] ?: [];
 
         if (isset($body['fileuid']))
-            $body = base64_encode($this->getFileObjectByUid($body['fileuid'])->getContents());
+            $body = base64_encode(Utility::uid2file($body['fileuid'])->getContents());
 
-        $result = $this->service->call($action, $args, $body);
+        $result = $this->remote->call($action, $args, $body);
         $response->getBody()->write($result);
         return $response;
     }
