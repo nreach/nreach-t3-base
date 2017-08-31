@@ -25,40 +25,54 @@ define([
     if (HTMLCollection.prototype[Symbol.iterator] ==  null)
         HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
-    var trans = {
+	var defaultSelector = function(element) {
+        return $(element.parentElement.parentElement).siblings('.form-wizards-element')[0].children[0];
+    };
+
+	var nullSelector = function(element) {
+        return null;
+    };
+
+	var trans = {
         'nreacht3-imagekeywords': {
             widget: 'ImageKeywords',
-            selector: function(element) {
-                return $(element.parentElement.parentElement).siblings('.form-wizards-element')[0].children[0];
-            }
+            selector: defaultSelector,
+			targetSuffix: ''
         },
         'nreacht3-imagedescription': {
             widget: 'ImageDescription',
-            selector: function(element) {
-                return $(element.parentElement.parentElement).siblings('.form-wizards-element')[0].children[0];
-            }
+            selector: defaultSelector,
+			targetSuffix: ''
         },
         'nreacht3-pagekeywords': {
             widget: 'PageKeywords',
-            selector: function(element) {
-                return $(element.parentElement.parentElement).siblings('.form-wizards-element')[0].children[0];
-            }
+            selector: defaultSelector,
+			targetSuffix: ''
         },
         'nreacht3-magicrelation': {
             widget: 'MagicMedia',
-            selector: function(element) {
-                return null;
-            }
-        }
+            selector: nullSelector,
+			targetSuffix: ''
+        },
+		'nreacht3-entity-formdata': {
+            widget: 'EntityFormdata',
+            selector: defaultSelector,
+			targetSuffix: 'EntityFormdata'
+        },
+		'nreacht3-entity-jsonld': {
+            widget: 'EntityJsonld',
+            selector: defaultSelector,
+			targetSuffix: 'EntityJsonld'
+		}
     };
 
     $.each(trans,  function(className, config) {
         for (var element of document.getElementsByClassName(className))
-        {
-            var target = config.selector(element);
-            var data = $.extend({target: target}, element.dataset);
-            new NreachUI.default([config.widget], element, data, Remote);
-        }
+			{
+				var target = config.selector(element);
+				var data = $.extend({['target' + config.targetSuffix]: target}, element.dataset);
+				new NreachUI.default([config.widget], element, data, Remote);
+			}
     });
 
     return NreachUI;
