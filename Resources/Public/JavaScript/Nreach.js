@@ -1,13 +1,3 @@
-requirejs.config({
-    paths: {
-        NreachUI: [
-            'http://localhost:3001/webpack/NreachUI',
-            //If the dev version fails, load local
-            '../typo3conf/ext/nreach_t3_base/Resources/Public/JavaScript/lib/NreachUI'
-        ]
-    }
-});
-
 /**
  * @fileOverview Form JavaScript
  * @name Api.js
@@ -16,7 +6,7 @@ requirejs.config({
 define([
     'jquery',
     './Remote',
-    'NreachUI'
+    './lib/NreachUI'
 ], function (
     $,
     Remote,
