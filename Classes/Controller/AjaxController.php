@@ -42,8 +42,12 @@ class AjaxController extends ActionController
         $args = $params['args'] ?: [];
         $body = $params['body'] ?: [];
 
-        if (isset($body['fileuid']))
-            $body = base64_encode(Utility::uid2file($body['fileuid'])->getContents());
+        if (isset($body['fileuid'])) {
+            $file = Utility::uid2file($body['fileuid']);
+            $body = base64_encode(
+                Utility::limitImageDimension($file)->getContents()
+            );
+        }
 
         $result = $this->remote->call($action, $args, $body);
         $response->getBody()->write($result);

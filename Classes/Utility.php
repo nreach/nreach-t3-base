@@ -1,6 +1,10 @@
 <?php
 namespace Nreach\T3Base;
 
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 
@@ -64,11 +68,29 @@ class Utility
         return ResourceFactory::getInstance()->getFileObject((integer) $uid);
     }
 
-    public static function isImage($file)
+    public static function isImage(FileInterface $file)
     {
         return in_array(
             $file->getExtension(),
             Utility::getKnownImageExtensions()
         );
+    }
+
+    /**
+     * @param FileInterface|File $file
+     * @param int $maxWidth
+     * @param int $maxHeight
+     * @return FileInterface
+     */
+    public static function limitImageDimension(FileInterface $file, $maxWidth = 1200, $maxHeight = 1200)
+    {
+        if (!static::isImage($file) && !($file instanceof ProcessedFile)) {
+            return $file;
+        }
+
+        return $file->process(ProcessedFile::CONTEXT_IMAGECROPSCALEMASK, [
+            'maxWidth' => $maxWidth,
+            'maxHeight' => $maxHeight,
+        ]);
     }
 }
