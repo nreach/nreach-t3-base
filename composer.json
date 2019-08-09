@@ -2,7 +2,10 @@
   "name": "nreach/nreach-t3-base",
   "type": "typo3-cms-extension",
   "description": "nreach",
-  "keywords": ["semantic", "images"],
+  "keywords": [
+    "semantic",
+    "images"
+  ],
   "license": "GPL-2.0-or-later",
   "minimum-stability": "dev",
   "authors": [
@@ -17,7 +20,7 @@
     }
   },
   "require": {
-    "typo3/cms-core": "^9.5",
+    "typo3/cms-core": "^9.5 || 10.*.*@dev",
     "nreach/nreach-base": "^2.0"
   },
   "extra": {
